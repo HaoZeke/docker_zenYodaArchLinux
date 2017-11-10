@@ -21,23 +21,22 @@ ENV USE_CCACHE 1
 
 # Fix permissions on home
 RUN chown -R ${USER}:${USER} /home/${USER}
+RUN mkdir -p /home/${USER}/aur
+
+# Switch to ${USER}
+USER ${USER}
 
 # Install yaourt
-RUN sudo -u ${USER} rm -rf /tmp/package-query && \
-    sudo -u ${USER} rm -rf /tmp/yaourt && \
-    cd /tmp && \
-    sudo -u ${USER} git clone https://aur.archlinux.org/package-query.git && \
+RUN cd /home/${USER}/aur && \
+    git clone https://aur.archlinux.org/package-query.git && \
     cd /tmp/package-query && \
     yes | sudo -u ${USER} makepkg -si && \
     cd .. && \
     sudo -u ${USER} git clone https://aur.archlinux.org/yaourt.git && \
-    cd /tmp/${USER} && \
+    cd yaourt && \
     yes | sudo -u ${USER} makepkg -si && \
     cd .. && \
-    echo 'EXPORT=2' >> /etc/yaourtrc && \
-    sudo -u ${USER} yaourt --version
-
-USER ${USER}
+    yaourt --version
 
 # Extras
 RUN yaourt -S --noconfirm --noedit icu58
