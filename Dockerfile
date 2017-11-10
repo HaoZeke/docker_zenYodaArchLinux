@@ -26,17 +26,24 @@ RUN mkdir -p /home/${USER}/aur
 # Switch to ${USER}
 USER ${USER}
 
-# Install yaourt
+# Install yaourt (Adapted from https://github.com/Phifo/yaourt/blob/master/yaourt-install)
 RUN cd /home/${USER}/aur && \
-    git clone https://aur.archlinux.org/package-query.git && \
-    cd /tmp/package-query && \
-    yes | sudo -u ${USER} makepkg -si && \
-    cd .. && \
-    sudo -u ${USER} git clone https://aur.archlinux.org/yaourt.git && \
-    cd yaourt && \
-    yes | sudo -u ${USER} makepkg -si && \
-    cd .. && \
-    yaourt --version
+    echo "Retrieving package-query ..." && \
+	curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz && \
+	echo "Uncompressing package-query ..." && \
+	tar zxvf package-query.tar.gz && \
+	cd package-query && \
+	echo "Installing package-query ..." && \
+	makepkg -si --noconfirm && \
+	cd .. && \
+	echo "Retrieving yaourt ..." && \
+	curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz && \
+	echo "Uncompressing yaourt ..." && \
+	tar zxvf yaourt.tar.gz && \
+	cd yaourt && \
+	echo "Installing yaourt ..." && \
+	sudo makepkg -si --noconfirm && \
+	echo "Done!"
 
 # Extras
 RUN yaourt -S --noconfirm --noedit icu58
