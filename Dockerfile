@@ -2,7 +2,8 @@
 FROM base/devel
 
 # By Rohit Goswami
-LABEL maintainer= "Rohit Goswami <rohit.1995@mail.ru>"
+LABEL maintainer="Rohit Goswami <rohit.1995@mail.ru>"
+LABEL name="zenYoda"
 
 # Update apt and get build reqs
 RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy
