@@ -17,7 +17,7 @@ RUN pacman --noconfirm -Syy yaourt
 
 # Switch to the new user by default and make ~/ the working dir
 ENV USER zenyoda
-WORKDIR /home/${USER}/
+# WORKDIR /home/${USER}/
 
 # Add the build user, update password to build and add to sudo group
 RUN useradd --create-home ${USER} && echo "${USER}:${USER}" | chpasswd && usermod -aG wheel ${USER}
@@ -31,7 +31,7 @@ RUN chown -R ${USER}:${USER} /home/${USER}
 RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 
 # Switch to ${USER}
-USER ${USER}
+# USER ${USER}
 RUN whoami
 
 # Extras
