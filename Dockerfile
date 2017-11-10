@@ -9,7 +9,7 @@ RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-ke
 RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git
 
 # Switch to the new user by default and make ~/ the working dir
-ENV USER build
+ENV USER zenyoda
 WORKDIR /home/${USER}/
 
 # Add the build user, update password to build and add to sudo group
@@ -21,10 +21,11 @@ ENV USE_CCACHE 1
 
 # Fix permissions on home
 RUN chown -R ${USER}:${USER} /home/${USER}
-RUN mkdir -p /home/${USER}/aur
+RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 
 # Switch to ${USER}
 USER ${USER}
+RUN whoami
 
 # Install yaourt (Adapted from https://github.com/Phifo/yaourt/blob/master/yaourt-install)
 RUN cd /home/${USER}/aur && \
