@@ -9,6 +9,16 @@ LABEL name="zenYoda"
 RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy
 RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber
 
+# Add archLinuFr
+RUN  echo '\
+[archlinuxfr]\
+SigLevel = Never\
+Server = http://repo.archlinux.fr/$arch\
+' >> /etc/pacman.conf
+
+# Get yaourt
+RUN pacman --noconfirm -Syy yaourt
+
 # Switch to the new user by default and make ~/ the working dir
 ENV USER zenyoda
 WORKDIR /home/${USER}/
@@ -27,25 +37,6 @@ RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 # Switch to ${USER}
 USER ${USER}
 RUN whoami
-
-# Install yaourt (Adapted from https://github.com/Phifo/yaourt/blob/master/yaourt-install)
-RUN cd aur && \
-    echo "Retrieving package-query ..." && \
-	curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz && \
-	echo "Uncompressing package-query ..." && \
-	tar zxvf package-query.tar.gz && \
-	cd package-query && \
-	echo "Installing package-query ..." && \
-	makepkg -si --noconfirm && \
-	cd .. && \
-	echo "Retrieving yaourt ..." && \
-	curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz && \
-	echo "Uncompressing yaourt ..." && \
-	tar zxvf yaourt.tar.gz && \
-	cd yaourt && \
-	echo "Installing yaourt ..." && \
-	sudo makepkg -si --noconfirm && \
-	echo "Done!"
 
 # Extras
 RUN yaourt -S --noconfirm --noedit icu58
