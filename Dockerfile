@@ -7,7 +7,7 @@ LABEL name="zenYoda"
 
 # Update apt and get build reqs
 RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy
-RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git
+RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber
 
 # Switch to the new user by default and make ~/ the working dir
 ENV USER zenyoda
