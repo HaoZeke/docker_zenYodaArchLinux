@@ -14,7 +14,7 @@ WORKDIR /home/${USER}/
 
 # Add the build user, update password to build and add to sudo group
 RUN useradd --create-home ${USER} && echo "${USER}:${USER}" | chpasswd && usermod -aG wheel ${USER}
-
+RUN echo "${USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Use ccache by default
 ENV USE_CCACHE 1
