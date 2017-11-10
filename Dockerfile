@@ -10,11 +10,7 @@ RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-ke
 RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber
 
 # Add archLinuFr
-RUN  echo '\
-[archlinuxfr]\
-SigLevel = Never\
-Server = http://repo.archlinux.fr/$arch\
-' >> /etc/pacman.conf
+RUN  echo -e "\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
 
 # Get yaourt
 RUN pacman --noconfirm -Syy yaourt
@@ -39,9 +35,8 @@ USER ${USER}
 RUN whoami
 
 # Extras
-RUN yaourt -S --noconfirm --noedit icu58
 RUN pip install --user panflute
-
+RUN yarn global add surge
 
 # Setup dummy git config
 RUN git config --global user.name "${USER}" && git config --global user.email "${USER}@localhost"
