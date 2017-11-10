@@ -13,7 +13,7 @@ ENV USER build
 WORKDIR /home/${USER}/
 
 # Add the build user, update password to build and add to sudo group
-RUN useradd --create-home ${USER} && echo "${USER}:${USER}" | chpasswd && adduser ${USER} sudo
+RUN useradd --create-home ${USER} && echo "${USER}:${USER}" | chpasswd && usermod -aG sudo ${USER}
 
 # Use ccache by default
 ENV USE_CCACHE 1
