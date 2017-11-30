@@ -7,7 +7,7 @@ LABEL name="zenYoda"
 
 # Update apt and get build reqs
 RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy
-RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber
+RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
 
 # Add archLinuFr
 RUN  echo -e "\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
@@ -35,7 +35,7 @@ RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 RUN whoami
 
 # Extras
-RUN pip install --user panflute
+RUN sudo pip install panflute pandoc-eqnos pandoc-fignos
 RUN yarn global add surge
 
 # Setup dummy git config
