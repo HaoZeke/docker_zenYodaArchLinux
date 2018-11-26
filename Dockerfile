@@ -5,7 +5,8 @@ FROM base/devel
 LABEL maintainer="Rohit Goswami <rohit.1995@mail.ru>"
 LABEL name="zenYoda"
 
-# Update apt and get build reqs
+# Update package lists and get build reqs
+RUN  curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist
 RUN pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy
 RUN pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
 
