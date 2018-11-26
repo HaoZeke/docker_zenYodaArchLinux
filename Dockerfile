@@ -5,16 +5,13 @@ FROM base/devel
 LABEL maintainer="Rohit Goswami <rohit.1995@mail.ru>"
 LABEL name="zenYoda"
 
-# Update package lists and get build reqs
+# Update package lists and get build reqs including yay
 RUN  curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist && \
  pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy && \
- pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
-
-# Add archLinuFr
-RUN  echo -e "\n[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-
-# Get yaourt
-RUN pacman --noconfirm -Syy yaourt
+ pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh && \
+ git clone https://aur.archlinux.org/yay.git && \
+ cd yay && \
+ makepkg -si --noconfirm
 
 # Switch to the new user by default and make ~/ the working dir
 ENV USER zenyoda
