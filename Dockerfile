@@ -9,9 +9,6 @@ LABEL name="zenYoda"
 RUN  curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist && \
  pacman-key --refresh-keys && pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy && \
  pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh && \
- git clone https://aur.archlinux.org/yay.git && \
- cd yay && \
- makepkg -si --noconfirm
 
 # Switch to the new user by default and make ~/ the working dir
 ENV USER zenyoda
@@ -33,8 +30,11 @@ RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 RUN whoami
 
 # Extras
-RUN sudo pip install panflute pandoc-eqnos pandoc-fignos
-RUN yarn global add surge
+RUN sudo pip install panflute pandoc-eqnos pandoc-fignos && \
+ yarn global add surge && \
+ git clone https://aur.archlinux.org/yay.git && \
+ cd yay && \
+ makepkg -si --noconfirm && \
 
 # Setup dummy git config
 RUN git config --global user.name "${USER}" && git config --global user.email "${USER}@localhost"
