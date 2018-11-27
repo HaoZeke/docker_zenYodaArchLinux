@@ -34,7 +34,7 @@ RUN sudo pip install panflute pandoc-eqnos pandoc-fignos && \
  yarn global add surge && \
  git clone https://aur.archlinux.org/yay.git && \
  cd yay && \
- makepkg -si --noconfirm && \
+ makepkg -si --noconfirm
 
 # Setup dummy git config
 RUN git config --global user.name "${USER}" && git config --global user.email "${USER}@localhost"
