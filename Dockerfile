@@ -11,6 +11,7 @@ RUN  curl -s "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&pr
  pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
 
 # Switch to the new user by default and make ~/ the working dir
+ENV USER zenyoda
 # WORKDIR /home/${USER}/
 
 # Add the build user, update password to build and add to sudo group
@@ -26,7 +27,6 @@ RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 
 # Switch to ${USER}
 # USER ${USER}
-USER zenyoda
 RUN whoami
 
 # Extras
