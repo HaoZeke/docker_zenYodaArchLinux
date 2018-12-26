@@ -26,8 +26,8 @@ RUN chown -R ${USER}:${USER} /home/${USER}
 RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 
 # Switch to ${USER}
-# USER ${USER}
-RUN whoami
+USER ${USER}
+# RUN whoami
 
 # Extras
 RUN sudo pip install panflute pandoc-eqnos pandoc-fignos && \
