@@ -1,5 +1,5 @@
 # Use the latest arch with base-devel
-FROM base/devel
+FROM archlinux:latest
 
 # By Rohit Goswami
 LABEL maintainer="Rohit Goswami <rohit.1995@mail.ru>"
@@ -10,7 +10,7 @@ RUN  curl -s "https://www.archlinux.org/mirrorlist/all/http/" | sed -e 's/^#Serv
     rm -R /etc/pacman.d/gnupg/ && rm -R /root/.gnupg/ && gpg --refresh-keys && \
     pacman-key --init && pacman --noconfirm -S archlinux-keyring && pacman-key --refresh-keys && \
     pacman-key -r 753E0F1F && pacman-key --lsign-key 753E0F1F && pacman -Syy && \
-    pacman --noconfirm -S python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
+    pacman --noconfirm -S base base-devel python-pip texlive-most yarn tup pandoc pandoc-citeproc sassc git biber openssh
 # The key management is from https://bbs.archlinux.org/viewtopic.php?id=242701 
 
 # Switch to the new user by default and make ~/ the working dir
