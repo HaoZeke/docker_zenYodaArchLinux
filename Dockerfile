@@ -30,10 +30,10 @@ RUN sudo -u ${USER} mkdir -p /home/${USER}/aur
 
 # Switch to ${USER}
 USER ${USER}
-# RUN whoami
 
 # Extras
 RUN sudo pip install panflute pandoc-eqnos pandoc-fignos && \
+ whoami && cd /home/${USER}/aur && \
  yarn global add surge && \
  git clone https://aur.archlinux.org/yay.git && \
  cd yay && \
