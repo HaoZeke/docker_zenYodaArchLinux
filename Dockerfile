@@ -8,7 +8,6 @@ LABEL name="zenYoda"
 # Update package lists and get build reqs including yay
 RUN  curl -s "https://www.archlinux.org/mirrorlist/all/http/" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist && \
     rm -R /etc/pacman.d/gnupg/ && \
-    rm -R /root/.gnupg/ && \
     gpg --refresh-keys && \
     pacman -Syy --noconfirm base base-devel && \
     pacman-key --init && pacman --noconfirm -S archlinux-keyring && pacman-key --refresh-keys && \
